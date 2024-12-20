@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     # locals 
+    'drf_yasg',        # Барои Swagger
     'accounts.apps.AccountsConfig',
     'NurCRM.apps.NurcrmConfig',
 ]
