@@ -1,6 +1,11 @@
 # urls.py
-from django.urls import path
+from django.urls import path,include
+from rest_framework.routers import DefaultRouter
 from .views import *
+
+router = DefaultRouter()
+router.register(r'products', ShopProductViewSet, basename='shopproduct')
+router.register(r'orders', ShopOrderViewSet, basename='shoporder')
 
 urlpatterns = [
     path('products/', ProductListCreateAPIView.as_view(), name='product-list-create'),
@@ -14,4 +19,5 @@ urlpatterns = [
     path('colours/', ColourListCreateAPIView.as_view(), name='colour-list-create'),
     path('sklads/', SkladListCreateAPIView.as_view(), name='sklad-list-create'),
     path('sklad-products/', SkladProductListCreateAPIView.as_view(), name='sklad-product-list-create'),
+    path('shop/', include(router.urls)),
 ]
