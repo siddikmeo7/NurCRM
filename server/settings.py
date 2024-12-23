@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 3rd party 
-    "corsheaders",
+    'corsheaders',
     'rest_framework',
     # locals 
     'drf_yasg',  
