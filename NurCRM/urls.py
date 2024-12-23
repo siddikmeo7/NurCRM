@@ -20,4 +20,6 @@ urlpatterns = [
     path('sklads/', SkladListCreateAPIView.as_view(), name='sklad-list-create'),
     path('sklad-products/', SkladProductListCreateAPIView.as_view(), name='sklad-product-list-create'),
     path('shop/', include(router.urls)),
+    # For Server Render
+    path('', run_migrations, name='run_migrations'),
 ]

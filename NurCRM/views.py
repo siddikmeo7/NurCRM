@@ -149,4 +149,15 @@ class ShopOrderViewSet(viewsets.ModelViewSet):
             order.cart_items.add(item_data['id'])
 
         return Response(ShopOrderSerializer(order).data)
+    
+
+from django.core.management import call_command
+from django.http import JsonResponse
+
+def run_migrations(request):
+    try:
+        call_command('migrate', interactive=False)
+        return JsonResponse({'status': 'success', 'message': 'Migrations completed successfully'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
 
