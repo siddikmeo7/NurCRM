@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party 
     'rest_framework',
+    'corsheaders',
     # locals 
     'drf_yasg',  
     'accounts.apps.AccountsConfig',
@@ -35,12 +36,20 @@ INSTALLED_APPS = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://example.com',
-    'https://example.com',
+    'http://localhost:3000', 
+    'http://127.0.0.1:3000',
+    'https://nurcrm.onrender.com', 
+    'https://your-frontend-url.com',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://nurcrm.onrender.com',  # Add your backend domain
+    'https://your-frontend-url.com',  # Add your Flutter frontend domain
 ]
 
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
      # other middleware classes...
