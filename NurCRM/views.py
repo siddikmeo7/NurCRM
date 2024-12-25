@@ -59,6 +59,10 @@ from rest_framework import status
 class TransactionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['amount', 'date']
+    search_fields = ['description']
+    ordering_fields = ['amount', 'date']
 
     def get_queryset(self):
         # Filter transactions to only show those related to the authenticated user
@@ -163,7 +167,6 @@ class ShopOrderViewSet(viewsets.ModelViewSet):
             order.cart_items.add(item_data['id'])
 
         return Response(ShopOrderSerializer(order).data)
-    
 
 from django.core.management import call_command
 from django.http import JsonResponse
