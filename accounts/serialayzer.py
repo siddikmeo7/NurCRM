@@ -14,19 +14,15 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['username', 'email','phone_number','password', 'password_confirm']
 
     def validate(self, data):
-        # Тасдиқ кардани мувофиқати паролҳо
         if data['password'] != data['password_confirm']:
             raise serializers.ValidationError({"password": "Passwords do not match."})
         return data
 
     def create(self, validated_data):
-        # Майдони `password_confirm`-ро хориҷ мекунем
         validated_data.pop('password_confirm')
         
-        # Ҳаши паролро пеш аз сабт кардан месозем
         validated_data['password'] = make_password(validated_data['password'])
 
-        # Объекти корбарро эҷод мекунем
         return CustomUser.objects.create(**validated_data)
 
 

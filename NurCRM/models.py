@@ -37,7 +37,6 @@ class Profile(models.Model):
     def __str__(self):
         return f"Profile of {self.user.username}"
 
-# Product Models
 class Product(models.Model):
     user = models.ForeignKey("NurCRM.CustomUser", on_delete=models.CASCADE)
     category = models.ForeignKey("NurCRM.Category", on_delete=models.CASCADE, related_name="products")
@@ -69,7 +68,6 @@ class Colour(models.Model):
     def __str__(self):
         return self.name
 
-# Sklad (Warehouse) Models
 class Sklad(models.Model):
     name = models.CharField(max_length=50)
     is_active = models.BooleanField(default=True)
@@ -98,7 +96,6 @@ class Order(models.Model):
     def __str__(self):
         return f"Order #{self.id} - {self.client.name}"
 
-# Transaction of Clients  Loan/Paid
 class Transaction(models.Model):
     TRANSACTION_TYPES = [
         ('loan', 'Loan'),
@@ -125,7 +122,6 @@ def update_client_balance(sender, instance, created, **kwargs):
     def __str__(self):
         return f"{self.client.name} - {self.transaction_type} - {self.amount}"
     
-# Shop Part 
 
 class ShopCategory(models.Model):
     name = models.CharField(max_length=255)

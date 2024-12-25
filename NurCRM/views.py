@@ -21,7 +21,6 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     ordering_fields = ['price', 'name']
 
     def get_queryset(self):
-        # Filter products to only show those created by the authenticated user
         return Product.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
@@ -40,11 +39,9 @@ class ClientListCreateAPIView(generics.ListCreateAPIView):
     ordering_fields = ['name']
 
     def get_queryset(self):
-        # Filter clients to only show those related to the authenticated user
-        return Client.objects.filter(user=self.request.user)  # <-- Change `Product` to `Client`
+        return Client.objects.filter(user=self.request.user)  
     
     def perform_create(self, serializer):
-        # Assign the authenticated user to the client before saving
         serializer.save(user=self.request.user)
 
 class ClientRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -117,9 +114,7 @@ class SkladProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = SkladProduct.objects.all()
     serializer_class = SkladProductSerializer
 
-# Shop Part
 
-# ShopOrder views
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action

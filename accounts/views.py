@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 
 
 class RegisterView(APIView):
-    permission_classes = [AllowAny]  # Allow everyone to access this view
+    permission_classes = [AllowAny]  
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -18,13 +18,13 @@ class RegisterView(APIView):
 
 
 class LoginView(APIView):
-    permission_classes = [AllowAny]  # Allow everyone to access this view
+    permission_classes = [AllowAny]  
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data
-            login(request, user)  # Start a session for the user
+            login(request, user)  
             return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
