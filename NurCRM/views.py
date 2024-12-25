@@ -3,7 +3,8 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
-
+from rest_framework import generics, filters, viewsets, permissions
+from django_filters.rest_framework import DjangoFilterBackend
 CustomUser = get_user_model()
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
@@ -14,6 +15,10 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['name', 'price', 'category']
+    search_fields = ['name', 'description']
+    ordering_fields = ['price', 'name']
 
     def get_queryset(self):
         # Filter products to only show those created by the authenticated user
@@ -29,6 +34,10 @@ class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
 class ClientListCreateAPIView(generics.ListCreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['name', 'email']
+    search_fields = ['name', 'email']
+    ordering_fields = ['name']
 
     def get_queryset(self):
         # Filter clients to only show those related to the authenticated user
@@ -121,6 +130,10 @@ class ShopProductViewSet(viewsets.ModelViewSet):
     queryset = ShopProduct.objects.all()
     serializer_class = ShopProductSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['name', 'price', 'stock']
+    search_fields = ['name', 'description']
+    ordering_fields = ['price', 'stock']
 
     @action(detail=True, methods=['post'])
     def add_to_cart(self, request, pk=None):
@@ -136,6 +149,7 @@ class ShopOrderViewSet(viewsets.ModelViewSet):
     queryset = ShopOrder.objects.all()
     serializer_class = ShopOrderSerializer
     permission_classes = [permissions.IsAuthenticated]
+
 
     def create(self, request, *args, **kwargs):
         cart_items = request.data.get('cart_items')
