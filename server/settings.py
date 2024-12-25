@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_yasg',
-    'django-filters'
+    'django_filters',
     'accounts.apps.AccountsConfig',
     'NurCRM.apps.NurcrmConfig',
 ]
