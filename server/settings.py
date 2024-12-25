@@ -25,10 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 3rd party 
     'rest_framework',
     'corsheaders',
-    # locals 
     'drf_yasg',
     'django-filters'
     'accounts.apps.AccountsConfig',
@@ -46,14 +44,13 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://nurcrm.onrender.com',  # Add your backend domain
-    'https://your-frontend-url.com',  # Add your Flutter frontend domain
+    'https://nurcrm.onrender.com', 
+    'https://your-frontend-url.com',  
 ]
 
 
 
 MIDDLEWARE = [
-     # other middleware classes...
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

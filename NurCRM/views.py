@@ -65,17 +65,13 @@ class TransactionListCreateAPIView(generics.ListCreateAPIView):
     ordering_fields = ['amount', 'date']
 
     def get_queryset(self):
-        # Filter transactions to only show those related to the authenticated user
         return Transaction.objects.filter(client__user=self.request.user)
 
     def perform_create(self, serializer):
-        # Get the client associated with the transaction
         client = Client.objects.get(id=self.kwargs['client_id'])
 
-        # Save the transaction
         transaction = serializer.save(client=client, user=self.request.user)
 
-        # Send email to client after transaction is created
         self.send_transaction_email(client)
 
     def send_transaction_email(self, client):
@@ -86,7 +82,6 @@ class TransactionListCreateAPIView(generics.ListCreateAPIView):
         send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
 
     def create(self, request, *args, **kwargs):
-        # Override to include the response
         response = super().create(request, *args, **kwargs)
         return response
 
@@ -100,7 +95,6 @@ class ProfileRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
 
     def get_queryset(self):
-        # Filter to ensure user can only modify their own products
         return Product.objects.filter(user=self.request.user)
 
     def get_object(self):
