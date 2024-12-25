@@ -12,7 +12,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
-        # No need to manually create the profile since the signal will do it
         return user
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -58,7 +57,6 @@ class SkladProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'sklad', 'product', 'quantity']
 
 
-# Shop Part
 class ShopCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopCategory
@@ -73,15 +71,12 @@ class ShopProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        # Extract the nested fields
         category_data = validated_data.pop('category')
         user_data = validated_data.pop('user')
 
-        # You can either create a new instance for nested fields if needed
         category = ShopCategory.objects.get(id=category_data.id)
         user = CustomUser.objects.get(id=user_data.id)
 
-        # Create the ShopProduct instance
         shop_product = ShopProduct.objects.create(category=category, user=user, **validated_data)
         
         return shop_product
