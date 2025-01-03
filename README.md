@@ -34,3 +34,4 @@ Follow these steps to set up **NurCRM** on your local machine:
 ```bash
 git clone https://github.com/siddikmeo7/NurCRM.git
 cd NurCRM
+--------------------------------------------------------------
